@@ -1,0 +1,110 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<h:outputStylesheet library="css" name="bootstrap.min.css" />
+	<title>Editar Tarefa</title>
+</h:head>
+
+
+<h:body>
+
+	<f:metadata>
+		<f:viewParam id="id" name="id" value="#{adminEditarTarefaBean.id}" />
+		<f:viewAction action="#{adminEditarTarefaBean.carregarTarefa()}" />
+	</f:metadata>
+
+
+	<nav class="navbar navbar-expand-lg navbar-light bg-light"> <a
+		class="navbar-brand" href="#">SistemaTarefas</a>
+	<button class="navbar-toggler" type="button" data-toggle="collapse"
+		data-target="#navbarSupportedContent"
+		aria-controls="navbarSupportedContent" aria-expanded="false"
+		aria-label="Toggle navigation">
+		<span class="navbar-toggler-icon"></span>
+	</button>
+
+	<div class="collapse navbar-collapse" id="navbarSupportedContent">
+		<ul class="navbar-nav mr-auto">
+			<li class="nav-item active"><a class="nav-link" href="/sistematarefas/restrito/index.xhtml">Home</a></li>
+			<li class="nav-item"><a class="nav-link"
+				href="/sistematarefas/restrito/cadastro_tarefa.xhtml">Cadastro
+					Tarefa</a></li>
+			<li class="nav-item"><a class="nav-link"
+				href="/sistematarefas/cadastro.xhtml">Cadastro Responsavel</a></li>
+			<li class="nav-item"><a class="nav-link"
+				href="/sistematarefas/restrito/lista_tarefas.xhtml">Lista
+					Tarefas</a></li>
+			<li class="nav-item"><a class="nav-link"
+				href="/sistematarefas/login.xhtml">Login</a></li>
+			<li class="nav-item">
+				<h:form>
+					<h:commandButton value="Deslogar" action="#{adminLoginBean.deslogar()}" styleClass="nav-link" />
+				</h:form>
+			</li>
+		</ul>
+	</div>
+	</nav>
+
+
+	<div class="container">
+	
+		<h1>Editar tarefa #{adminEditarTarefaBean.tarefa.id}</h1>
+		
+		<h:form>
+			
+			<div class="form-group">
+				<h:outputLabel value="Título:" />
+				<h:inputText value="#{adminEditarTarefaBean.tarefa.titulo}" required="true"
+					id="titulo" styleClass="form-control" />
+				<h:message for="titulo" />
+			</div>
+			
+			<div class="form-group">
+				<h:outputLabel value="Descrição:" />
+				<h:inputTextarea rows="10" cols="30" required="true"
+					value="#{adminEditarTarefaBean.tarefa.descricao}" id="descricao"
+					styleClass="form-control" />
+				<h:message for="descricao" />
+			</div>
+			
+			<div class="form-group">
+				<h:outputLabel value="Responsável:" />
+				<h:selectOneMenu value="#{adminEditarTarefaBean.tarefa.responsavel}"
+					converter="responsavelConverter" id="responsaveis" styleClass="form-control">
+					<f:selectItems value="#{adminTarefasBean.responsaveis}" var="responsavel"
+						itemValue="#{responsavel}" itemLabel="#{responsavel.nomeCompleto}" />
+				</h:selectOneMenu>
+				<h:message for="responsaveis" />
+			</div>
+			
+			<div class="form-group">
+				<h:outputLabel value="Prioridade:" />
+				<h:selectOneMenu value="#{adminEditarTarefaBean.tarefa.prioridade}"
+					id="prioridade" styleClass="form-control">
+					<f:selectItems value="#{adminTarefasBean.prioridades}" var="prioridade"
+						itemValue="#{prioridade}" itemLabel="#{prioridade.label}" />
+				</h:selectOneMenu>
+				<h:message for="responsaveis" />
+			</div>
+			
+			<div class="form-group">
+				<h:outputLabel value="DeadLine" />
+				<h:inputText value="#{adminEditarTarefaBean.tarefa.deadline}"
+					id="deadline" styleClass="form-control" />
+				<h:message for="deadline" />
+			</div>
+			
+			<h:commandButton value="Salvar" action="#{adminEditarTarefaBean.editar()}"
+				styleClass="btn btn-primary" />
+		</h:form>
+	</div>
+
+</h:body>
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html">
+
+<h:head>
+	<h:outputStylesheet library="css" name="bootstrap.min.css" />
+	<title>Cadastro Responsavel</title>
+</h:head>
+<h:body>
+
+	<nav class="navbar navbar-expand-lg navbar-light bg-light"> <a
+		class="navbar-brand" href="#">SistemaTarefas</a>
+	<button class="navbar-toggler" type="button" data-toggle="collapse"
+		data-target="#navbarSupportedContent"
+		aria-controls="navbarSupportedContent" aria-expanded="false"
+		aria-label="Toggle navigation">
+		<span class="navbar-toggler-icon"></span>
+	</button>
+
+	<div class="collapse navbar-collapse" id="navbarSupportedContent">
+		<ul class="navbar-nav mr-auto">
+			<li class="nav-item active"><a class="nav-link" href="/sistematarefas/restrito/index.xhtml">Home</a></li>
+			<li class="nav-item"><a class="nav-link"
+				href="/sistematarefas/restrito/cadastro_tarefa.xhtml">Cadastro
+					Tarefa</a></li>
+			<li class="nav-item"><a class="nav-link"
+				href="#">Cadastro Responsavel</a></li>
+			<li class="nav-item"><a class="nav-link"
+				href="/sistematarefas/restrito/lista_tarefas.xhtml">Lista
+					Tarefas</a></li>
+			<li class="nav-item"><a class="nav-link"
+				href="/sistematarefas/login.xhtml">Login</a></li>
+			<li class="nav-item">
+				<h:form>
+					<h:commandButton value="Deslogar" action="#{adminLoginBean.deslogar()}" styleClass="nav-link" />
+				</h:form>
+			</li>
+		</ul>
+	</div>
+	</nav>
+
+
+	<div class="container">
+
+		<h:messages />
+
+		<h1>Cadastro Responsavel</h1>
+
+		<h:form>
+
+			<div class="form-group">
+				<h:outputLabel value="Nome Completo: " />
+				<h:inputText
+					value="#{adminResponsavelBean.responsavel.nomeCompleto}"
+					required="true" id="nome" styleClass="form-control" />
+				<h:message for="nome" />
+			</div>
+
+			<div class="form-group">
+				<h:outputLabel value="Email: " />
+				<h:inputText value="#{adminResponsavelBean.responsavel.email}"
+					required="true" id="email" styleClass="form-control" />
+				<h:message for="email" />
+			</div>
+
+			<div class="form-group">
+				<h:outputLabel value="Senha: " />
+				<h:inputText value="#{adminResponsavelBean.responsavel.senha}"
+					required="true" id="senha" styleClass="form-control" />
+				<h:message for="senha" />
+			</div>
+
+			<h:commandButton value="Cadastrar"
+				action="#{adminResponsavelBean.salvar()}"
+				styleClass="btn btn-primary" />
+		</h:form>
+	</div>
+</h:body>
+</html>

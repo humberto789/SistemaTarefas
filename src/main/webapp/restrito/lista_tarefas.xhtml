@@ -1,0 +1,169 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<h:outputStylesheet library="css" name="bootstrap.min.css" />
+	<title>Lista das Tarefas</title>
+</h:head>
+
+<h:body>
+
+	<f:metadata>
+		<f:viewAction action="#{adminListaTarefasBean.gerarLista()}" />
+	</f:metadata>
+	
+	<nav class="navbar navbar-expand-lg navbar-light bg-light"> <a
+		class="navbar-brand" href="#">SistemaTarefas</a>
+	<button class="navbar-toggler" type="button" data-toggle="collapse"
+		data-target="#navbarSupportedContent"
+		aria-controls="navbarSupportedContent" aria-expanded="false"
+		aria-label="Toggle navigation">
+		<span class="navbar-toggler-icon"></span>
+	</button>
+
+	<div class="collapse navbar-collapse" id="navbarSupportedContent">
+		<ul class="navbar-nav mr-auto">
+			<li class="nav-item active"><a class="nav-link" href="/sistematarefas/restrito/index.xhtml">Home</a></li>
+			<li class="nav-item"><a class="nav-link"
+				href="/sistematarefas/restrito/cadastro_tarefa.xhtml">Cadastro
+					Tarefa</a></li>
+			<li class="nav-item"><a class="nav-link"
+				href="/sistematarefas/cadastro.xhtml">Cadastro Responsavel</a></li>
+			<li class="nav-item"><a class="nav-link"
+				href="#">Lista
+					Tarefas</a></li>
+			<li class="nav-item"><a class="nav-link"
+				href="/sistematarefas/login.xhtml">Login</a></li>
+			<li class="nav-item">
+				<h:form>
+					<h:commandButton value="Deslogar" action="#{adminLoginBean.deslogar()}" styleClass="nav-link" />
+				</h:form>
+			</li>
+		</ul>
+	</div>
+	</nav>
+
+	<div class="container">
+
+		<h1>Lista de Tarefas</h1>
+
+		<h:messages />
+
+		<h:form>
+
+			<div class="form-group">
+				<h:outputLabel value="Numero:" />
+				<h:inputText value="#{adminListaTarefasBean.filtro.id}" id="id"
+					styleClass="form-control" />
+				<h:message for="id" />
+			</div>
+
+			<div class="form-group">
+				<h:outputLabel value="Titulo:" />
+				<h:inputText value="#{adminListaTarefasBean.filtro.titulo}"
+					id="titulo" styleClass="form-control" />
+				<h:message for="titulo" />
+			</div>
+
+			<div class="form-group">
+				<h:outputLabel value="Responsável:" />
+				<h:selectOneMenu value="#{adminListaTarefasBean.filtro.responsavel}"
+					converter="responsavelConverter" id="responsaveis"
+					styleClass="form-control">
+					<f:selectItems value="#{adminTarefasBean.responsaveis}"
+						var="responsavel" itemValue="#{responsavel}"
+						itemLabel="#{responsavel.nomeCompleto}" />
+				</h:selectOneMenu>
+				<h:message for="responsaveis" />
+			</div>
+
+			<div class="form-group">
+				<h:outputLabel value="Situação:" />
+				<h:selectOneMenu value="#{adminListaTarefasBean.filtro.concluida}"
+					styleClass="form-control">
+
+					<f:selectItem itemValue="true" itemLabel="Concluir" />
+					<f:selectItem itemValue="false" itemLabel="Em andamento" />
+				</h:selectOneMenu>
+				<h:message for="situação" />
+			</div>
+
+			<h:commandButton value="Buscar Filtro"
+				action="#{adminListaTarefasBean.consultar()}" styleClass="btn btn-primary">
+				<f:ajax execute="@all" render="@all" />
+			</h:commandButton>
+
+		</h:form>
+
+		<h2>Tarefas Filtradas</h2>
+
+		<h:dataTable var="tarefa" id="tabela1"
+			value="#{adminListaTarefasBean.tarefasFiltradas}"
+			class="table table-bordered table-striped table-hover">
+			<h:column>
+				<f:facet name="header">Número</f:facet>
+				#{tarefa.id}
+			</h:column>
+			<h:column>
+				<f:facet name="header">Título</f:facet>
+				#{tarefa.titulo}
+			</h:column>
+			<h:column>
+				<f:facet name="header">Descrição</f:facet>
+				#{tarefa.descricao}
+			</h:column>
+			<h:column>
+				<f:facet name="header">Prioridade</f:facet>
+				#{tarefa.prioridade.label}
+			</h:column>
+			<h:column>
+				<f:facet name="header">Responsavel</f:facet>
+				#{tarefa.responsavel.nomeCompleto}
+			</h:column>
+			<h:column>
+				<f:facet name="header">Deadline</f:facet>
+				<h:outputText value="#{tarefa.deadline}" />
+			</h:column>
+		</h:dataTable>
+		
+		<h2>Editar Lista Tarefas</h2>
+
+		<h:dataTable var="tarefa" id="tabela2"
+			value="#{adminListaTarefasBean.listaCompleta()}"
+			class="table table-bordered table-striped table-hover">
+			<h:column>
+				<f:facet name="header">Número</f:facet>
+				#{tarefa.id}
+			</h:column>
+			<h:column>
+				<f:facet name="header">Titulo</f:facet>
+				<h:outputText value="#{tarefa.titulo}" />
+			</h:column>
+			<h:column>
+				<h:form>
+					<h:commandButton action="#{adminTarefasBean.excluir(tarefa)}"
+						value="Excluir" styleClass="btn btn-primary">
+					</h:commandButton>
+
+					<h:commandButton
+						action="#{adminTarefasBean.concluirTarefa(tarefa)}"
+						value="Concluir" styleClass="btn btn-primary">
+					</h:commandButton>
+					<a href="editar_tarefa.xhtml?id=#{tarefa.id}"
+	                    title="#{tarefa.titulo}" class="btn btn-primary">
+	                	<h:outputText value="Editar" />    
+	                </a>
+				</h:form>
+			</h:column>
+
+		</h:dataTable>
+	</div>
+
+</h:body>
+</html>
