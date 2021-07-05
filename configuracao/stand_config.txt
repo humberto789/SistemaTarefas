@@ -1,0 +1,18 @@
+<drivers>
+    <driver name="postgresql" module="org.postgresql">
+        <!-- for xa datasource -->
+        <xa-datasource-class>org.postgresql.xa.PGXADataSource</xa-datasource-class>
+        <!-- for non-xa datasource -->
+        <driver-class>org.postgresql.Driver</driver-class>
+    </driver>
+</drivers>
+<datasources>
+    <datasource jndi-name="java:jboss/datasources/StenusysDemoDS" pool-name="StenusysDemoDS" enabled="true" use-java-context="true">
+        <connection-url>jdbc:postgresql://localhost:5432/StenusysDemo</connection-url>
+        <driver>postgresql</driver>
+        <security>
+            <user-name>postgres</user-name>
+            <password>admin</password>
+        </security>
+    </datasource>
+</datasources>
