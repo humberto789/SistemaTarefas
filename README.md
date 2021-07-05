@@ -17,6 +17,7 @@ IDE - Eclipse IDE for Enterprise Java and Web Developers - 2021-06 Ou similar
 Servidor local - WildFly 23.0 ou similar
 Banco de dados - PostgreSQL
 Java - Java 16
+Maven - Maven 4.0 ou similar
 
 Passos:
 1. Importa o projeto para a sua IDE.
