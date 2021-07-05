@@ -1,5 +1,6 @@
 package br.com.esig.sistematarefas.daos;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -15,8 +16,13 @@ import org.hibernate.criterion.Restrictions;
 import br.com.esig.sistematarefas.models.Filtro;
 import br.com.esig.sistematarefas.models.Tarefa;
 
-public class TarefaDao {
+public class TarefaDao implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	@PersistenceContext
 	private EntityManager manager;
 
